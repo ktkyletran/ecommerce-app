@@ -16,7 +16,4 @@ export default makeStyles(() => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  description: {
-    fontSize: '1em'
-  },
 }));
