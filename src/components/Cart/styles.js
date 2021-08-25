@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
   title: {
     marginTop: '5%',
   },
-  emptyButton: {
+  emptyBtn: {
     minWidth: '150px',
     [theme.breakpoints.down('xs')]: {
       marginBottom: '5px',
@@ -14,7 +14,7 @@ export default makeStyles((theme) => ({
       marginRight: '20px',
     },
   },
-  checkoutButton: {
+  checkoutBtn: {
     minWidth: '150px',
   },
   link: {
