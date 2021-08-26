@@ -22,8 +22,6 @@ const FormInput = ({ name, label, required }) => {
           name={name}
         />
       </Grid>
-      {/* <h1>hello</h1> */}
-
     </div>
   );
 };
