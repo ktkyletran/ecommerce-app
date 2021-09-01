@@ -6,9 +6,9 @@ import Review from './Review';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
-const PaymentForm = ({ token, shippingData, backStep, nextStep, handleCaptureCheckout }) => {
-  const handleSubmit = async (e, elements, stripe) => {
-    e.preventDefault();
+const PaymentForm = ({ token, shippingData, backStep, nextStep, onCaptureCheckout }) => {
+  const handleSubmit = async (event, elements, stripe) => {
+    event.preventDefault();
 
     if (!stripe || !elements) return;
 
@@ -17,7 +17,7 @@ const PaymentForm = ({ token, shippingData, backStep, nextStep, handleCaptureChe
     const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: cardElement });
 
     if (error) {
-      console.log(error)
+      alert(error)
     } else {
       const orderData = {
         line_items: token.live.line_items,
@@ -26,15 +26,24 @@ const PaymentForm = ({ token, shippingData, backStep, nextStep, handleCaptureChe
           lastname: shippingData.lastName,
           email: shippingData.email
         },
-        shipping: { name: 'Primary',
+        shipping: { 
+          name: 'Primary',
           street: shippingData.address1,
           town_city: shippingData.city,
-          county_state: shippingData.shippingSubdivison,
+          county_state: shippingData.state,
           postal_zip_code: shippingData.zip,
-          country: shippingData.shippingCountry,
+          country: shippingData.country,
+        },
+        billing: {
+          name: 'Primary',
+          street: shippingData.address1,
+          town_city: shippingData.city,
+          county_state: shippingData.state,
+          postal_zip_code: shippingData.zip,
+          country: shippingData.country,
         },
         fulfillment: { 
-          shipping_method: shippingData.shippingOption
+          shipping_method: shippingData.option
         },
         payment: {
           gateway: 'stripe',
@@ -43,9 +52,7 @@ const PaymentForm = ({ token, shippingData, backStep, nextStep, handleCaptureChe
           },
         },
       };
-      
-      handleCaptureCheckout(token.id, orderData);
-
+      onCaptureCheckout(token.id, orderData);
       nextStep();
     }
   };
@@ -66,7 +73,7 @@ const PaymentForm = ({ token, shippingData, backStep, nextStep, handleCaptureChe
               <br />
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button variant="outlined" onClick={backStep}>Back to shipping</Button>
-                <Button variant="contained" disabled={!stripe} color="primary">Submit payment</Button>
+                <Button variant="contained" disabled={!stripe} color="primary" type="submit">Submit payment</Button>
               </div>
             </form>
           )}

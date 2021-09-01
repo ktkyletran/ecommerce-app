@@ -55,12 +55,13 @@ const App = () => {
       const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
 
       setOrder(incomingOrder);
+      
       refreshCart();
-    } 
-    catch (err) {
-      setErrorMessage(err.data.error.message);
+    } catch (error) {
+      setErrorMessage(error.data.error.message);
     }
   };
+  console.log('order: ', order)
 
   useEffect(() => {
     fetchProducts();
@@ -84,7 +85,7 @@ const App = () => {
             />
           </Route>
           <Route exact path="/checkout">
-             <Checkout cart={cart} handleCaptureCheckout={handleCaptureCheckout} order={order} error={errorMessage} />
+             <Checkout cart={cart} onCaptureCheckout={handleCaptureCheckout} order={order} error={errorMessage} />
           </Route>
         </Switch>
       </div>

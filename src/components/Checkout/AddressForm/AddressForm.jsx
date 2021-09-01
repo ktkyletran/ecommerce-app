@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputLabel, Select, Menu, MenuItem, Grid, Button, Typography } from '@material-ui/core';
+import { InputLabel, Select, MenuItem, Grid, Button, Typography } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import FormInput from '../FormInput/FormInput';
 import { commerce } from '../../../lib/commerce';
@@ -18,8 +18,6 @@ const AddressForm = ({ checkoutToken, next }) => {
   const countryList = Object.entries(countries).map(([code, name]) => ({ id: code, label: name}));
   const stateList = Object.entries(states).map(([code, name]) => ({ id: code, label: name}));
   const optionList = options.map((sO) => ({ id: sO.id, label: `${sO.description} - (${sO.price.formatted_with_symbol})`}));
-
-  console.log(options)
 
   const fetchCountries = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
